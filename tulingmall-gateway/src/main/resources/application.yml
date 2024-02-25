@@ -1,0 +1,44 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: tulingmall-gateway
+#    strategy:   #discovery配置
+#      gateway:
+#        dynamic:
+#          route:
+#            enabled: true  # 开启网关订阅配置中心的动态路由策略,默认为false
+  cloud:
+    nacos:  #配置nacos注册中心地址
+      discovery:
+        server-addr: 192.168.65.103:8848  #注册中心地址
+        namespace: 6cd8d896-4d19-4e33-9840-26e4bee9a618  #环境隔离
+#        metadata:
+#          version: 1.1
+
+#    discovery:  #discovery配置，设置流量染色的元数据
+#      metadata:
+#        group: discovery-group  #组名必须配置
+
+    gateway:
+      routes:
+        - id: tulingmall-member   #路由ID，全局唯一
+          uri: lb://tulingmall-member
+          predicates:
+            - Path=/member/**,/sso/**
+        - id: tulingmall-promotion
+          uri: lb://tulingmall-promotion
+          predicates:
+            - Path=/coupon/**
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+
+tuling:
+  gateway:
+    shouldSkipUrls:
+      - /oauth/**
+      - /sso/**

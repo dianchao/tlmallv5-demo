@@ -1,0 +1,18 @@
+server:
+  port: 8822
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: tulingmall-promotion
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.65.103:8848
+        namespace: 6cd8d896-4d19-4e33-9840-26e4bee9a618
+#        cluster-name: shanghai
+#        metadata:
+#          version: v1.0.2
+
+
